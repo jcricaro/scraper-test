@@ -8,7 +8,24 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
+html, body {
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  color: #636b6f;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 200;
+  height: 100vh;
+  margin: 0;
+}
+.content {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+.title {
+  font-size: 84px;
+  text-align: center;
+}
+.m-b-md {
+  margin-bottom: 30px;
 }
