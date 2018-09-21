@@ -4,12 +4,12 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="site">Site</label>
-                    <input id="site" type="text" class="form-control" value="https://www.icas.com/find-a-ca" disabled>
+                    <input id="site" type="text" class="form-control" v-model="site" disabled>
                 </div>
 
                 <div class="form-group">
                     <label for="pages">Pages</label>
-                    <select id="pages" class="form-control">
+                    <select id="pages" class="form-control" v-model="pages">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -19,15 +19,48 @@
                     <small id="emailHelp" class="form-text text-muted">How many pages to scrape.</small>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Scrape</button>
+                <button type="submit" class="btn btn-primary" @click="scrapeSite">Scrape</button>
+
+                <div v-if="results">
+                    <hr>
+                    <div v-for="accountant in results">
+                        <ul>
+                            <li v-for="(attributes, label) in accountant">{{ label }} : {{ attributes }} </li>
+                        </ul>
+                        <hr>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
-        name: "Scraper"
+        name: "Scraper",
+        data() {
+          return {
+              site: 'https://www.icas.com/find-a-ca',
+              pages: 1,
+              results: null
+          }
+        },
+        methods: {
+            scrapeSite() {
+                axios.post('/api/scrape', {
+                    site: this.site,
+                    pages: this.pages
+                }).then(response => {
+                    console.log(response.data)
+                    this.results = response.data;
+                }).catch(error => {
+
+                })
+            }
+        }
     }
 </script>
 

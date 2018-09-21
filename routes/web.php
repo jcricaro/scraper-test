@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('/test', 'Api\ScrapeController@scrape');
