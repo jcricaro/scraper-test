@@ -47778,7 +47778,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             site: 'https://www.icas.com/find-a-ca',
             pages: 1,
-            results: null
+            results: null,
+            loading: false
         };
     },
 
@@ -47786,12 +47787,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         scrapeSite: function scrapeSite() {
             var _this = this;
 
+            this.loading = true;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/scrape', {
                 site: this.site,
                 pages: this.pages
             }).then(function (response) {
-                console.log(response.data);
                 _this.results = response.data;
+
+                _this.loading = false;
             }).catch(function (error) {});
         }
     }
@@ -47890,6 +47893,7 @@ var render = function() {
           "button",
           {
             staticClass: "btn btn-primary",
+            class: { disabled: _vm.loading },
             attrs: { type: "submit" },
             on: { click: _vm.scrapeSite }
           },

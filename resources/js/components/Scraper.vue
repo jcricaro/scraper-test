@@ -19,7 +19,7 @@
                     <small id="emailHelp" class="form-text text-muted">How many pages to scrape.</small>
                 </div>
 
-                <button type="submit" class="btn btn-primary" @click="scrapeSite">Scrape</button>
+                <button type="submit" v-bind:class="{ disabled: loading }" class="btn btn-primary" @click="scrapeSite">Scrape</button>
 
                 <div v-if="results">
                     <hr>
@@ -45,17 +45,20 @@
           return {
               site: 'https://www.icas.com/find-a-ca',
               pages: 1,
-              results: null
+              results: null,
+              loading: false
           }
         },
         methods: {
             scrapeSite() {
+                this.loading = true;
                 axios.post('/api/scrape', {
                     site: this.site,
                     pages: this.pages
                 }).then(response => {
-                    console.log(response.data)
                     this.results = response.data;
+
+                    this.loading = false;
                 }).catch(error => {
 
                 })
